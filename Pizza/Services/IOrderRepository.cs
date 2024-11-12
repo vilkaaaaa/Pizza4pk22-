@@ -16,7 +16,7 @@ namespace Pizza.Services
         //добавить заказ
         Task<Order> AddOrderAsync(Order order);
         //обновить заказ
-        Task<Order> UpdateOrderAsync(long orderId);
+        Task<Order> UpdateOrderAsync(Order order);
         //удалить заказ
         Task DeleteOrderAsync(long orderId);
 

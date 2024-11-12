@@ -41,45 +41,35 @@ namespace Pizza.Services
                     }
                     _context.Orders.Remove(order);
                 }
-
+                
                 await _context.SaveChangesAsync();
                 scope.Complete();
             }
         }
 
-        public Task<List<Order>> GetAllOrdersAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Order>> GetAllOrdersAsync()=> _context.Orders.ToListAsync();
+        
 
-        public Task<List<OrderStatus>> GetAllOrderStatusesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<OrderStatus>> GetAllOrderStatusesAsync()=> _context.OrderStatuses.ToListAsync();
 
-        public Task<List<ProductOption>> GetAllProductOptionsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<ProductOption>> GetAllProductOptionsAsync()=> _context.ProductOptions.ToListAsync();
 
-        public Task<List<Product>> GetAllProductsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Product>> GetAllProductsAsync() => _context.Products.ToListAsync();    
 
-        public Task<List<ProductSize>> GetAllProductSizesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<ProductSize>> GetAllProductSizesAsync() => _context.ProductSizes.ToListAsync();
 
-        public Task<List<Order>> GetOrdersByCustomerAsync(Guid customerId)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Order>> GetOrdersByCustomerAsync(Guid customerId)=>
+            _context.Orders.Where(o => o.CustomerId == customerId).ToListAsync();   
 
-        public Task<Order> UpdateOrderAsync(long orderId)
+        public async Task<Order> UpdateOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            if(!_context.Orders.Local.Any(o => o.Id == order.Id))
+            {
+                _context.Orders.Attach(order);
+            }
+            _context.Entry(order).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return order;
         }
     }
 }
