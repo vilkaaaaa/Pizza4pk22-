@@ -4,9 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pizza"
+        xmlns:views="clr-namespace:Pizza.Views"
+        xmlns:viewModels="clr-namespace:Pizza.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:AddEditCustomerViewModel}">
+            <views:AddEditCustomerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:CustomerListViewModel}">
+            <views:CustomerListView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:OrderPerpViewModel}">
+            <views:OrderPrepView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:OrderViewModer}">
+            <views:OrderView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="NavigationBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="клиенты"
+                    Command="{Binding NavigationCommand}"
+                    CommandParameter="customers"/>
+            
+            <Button Content="оформить заказ"
+                    Command="{Binding NavigationCommand}"
+                    CommandParameter="orderPrep"
+                    Grid.Column="1"/>
+        </Grid>
+        <Grid x:Name="ContentGrid">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
     </Grid>
 </Window>
