@@ -49,7 +49,7 @@
                     CommandParameter="orderPrep"
                     Grid.Column="1"/>
         </Grid>
-        <Grid x:Name="ContentGrid">
+        <Grid x:Name="ContentGrid" Grid.Row="1">
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>
     </Grid>

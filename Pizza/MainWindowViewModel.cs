@@ -4,17 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pizza.Models;
+using Pizza.Services;
 using Pizza.ViewModels;
 
 namespace Pizza
 {
     class MainWindowViewModel : BindableBase
     {
-        private AddEditCustomerViewModel _addEditCustomerVewModel = new();
-        private CustomerListViewModel _customerListViewModel = new();
-        private OrderPerpViewModel _orderPrepViewModel = new();
-        private OrderViewModer _orderViewModel = new();
+        private AddEditCustomerViewModel _addEditCustomerVewModel;
+        private CustomerListViewModel _customerListViewModel;
+        private OrderPerpViewModel _orderPrepViewModel;
+        private OrderViewModer _orderViewModel;
 
+        public MainWindowViewModel()
+        {
+            NavigationCommand = new RelayCommand<string>(OnNavigation);
+            _customerListViewModel = new CustomerListViewModel(new CustomerRepository()) ;
+            _addEditCustomerVewModel = new AddEditCustomerViewModel() ; 
+
+            _customerListViewModel.AddCustomerRequested +=NavigationToAddCustomer;
+            _customerListViewModel.EditCustomerRequested += NavigationToEditCustomer;
+            _customerListViewModel.PlaceOrderRequested += NavigateToOrder;
+        }
         private BindableBase _currentViewModel;
         public BindableBase CurrentViewModel
         {

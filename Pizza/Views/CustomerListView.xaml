@@ -7,6 +7,71 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="NavigationBar" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="добавить клиента"
+                    Command="{Binding AddCustomerCommand}"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Center"
+                    Width="150"/>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="поиск:"
+                           Margin="5"/>
+                <TextBox Text="{Binding SearchInput,
+                    UpdateSourceTrigger=PropertyChanged}"
+                         Width="200"/>
+                <Button Content="X"
+                        Command="{Binding ClearSearchInput}"/>
+            </StackPanel>
+        </Grid>
+
+        <DataGrid ItemsSource="{Binding Customers}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FullName}"
+                     Width="*"/>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="оформить заказ"
+                                    Command="{Binding DataContext.PlaceOrderCommand,
+                                        RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}"
+                                    Margin="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="редактировать"
+                                    Command="{Binding DataContext.EditCustomerCommand,
+                                        RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}"
+                                    Margin="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+           
+        </DataGrid>
+
+     
             
     </Grid>
 </UserControl>

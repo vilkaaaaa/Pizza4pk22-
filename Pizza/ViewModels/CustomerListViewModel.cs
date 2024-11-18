@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pizza.Services;
+using Pizza.Models;
+using System.Collections.ObjectModel;
 
 namespace Pizza.ViewModels
 {
@@ -12,6 +15,7 @@ namespace Pizza.ViewModels
          public CustomerListViewModel(ICustomerRepository repository)
          {
              _repository=repository;
+            Customers = new ObservableCollection<Customer>();   
         
              PlaceOrderCommand =new RelayCommand<Customer>(OnPlaceOrder);
              AddCustomerCommand = new RelayCommand(OnAddCustomer);
@@ -33,8 +37,8 @@ namespace Pizza.ViewModels
              Customers = new ObservableCollection<Customer>(_customersList);
          }
         
-         private string? _searchInput;
-         public string? SearchInput
+         private string _searchInput;
+         public string SearchInput
          {
              get => _searchInput;
              set
@@ -54,7 +58,7 @@ namespace Pizza.ViewModels
              else
              {
                  Customers = new ObservableCollection<Customer>(
-                     _customersList.Where(c => c.FirstName.ToLower()
+                     _customersList.Where(c => c.FullName.ToLower()
                      .Contains(findText.ToLower())));
              }
          }
@@ -64,13 +68,13 @@ namespace Pizza.ViewModels
          public RelayCommand<Customer> EditCustomerCommand { get; private set; }
          public RelayCommand ClearSearchInput {  get; private set; }
         
-         public event Action<Guid> PlaceOrderRequested = delegate { };
+         public event Action<Customer> PlaceOrderRequested = delegate { };
          public event Action<Customer> AddCustomerRequested = delegate { };  
          public event Action<Customer> EditCustomerRequested = delegate { }; 
         
          private void OnPlaceOrder(Customer customer)
          {
-             PlaceOrderRequested(customer.Id);
+             PlaceOrderRequested(customer);
          }
         
          private void OnAddCustomer()
