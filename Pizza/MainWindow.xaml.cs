@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Pizza.Models;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,11 @@ namespace Pizza
     /// </summary>
     public partial class MainWindow : Window
     {
+        PizzaDbkozlovtsevContext cont = new PizzaDbkozlovtsevContext();
         public MainWindow()
         {
             InitializeComponent();
+            MessageBox.Show(cont.Database.CanConnect().ToString());
         }
     }
 }
