@@ -14,8 +14,10 @@ namespace Pizza.ViewModels
          private ICustomerRepository _repository;
          public CustomerListViewModel(ICustomerRepository repository)
          {
+
              _repository=repository;
-            Customers = new ObservableCollection<Customer>();   
+            Customers = new ObservableCollection<Customer>();  
+            LoadCustomers();
         
              PlaceOrderCommand =new RelayCommand<Customer>(OnPlaceOrder);
              AddCustomerCommand = new RelayCommand(OnAddCustomer);
@@ -37,8 +39,8 @@ namespace Pizza.ViewModels
              Customers = new ObservableCollection<Customer>(_customersList);
          }
         
-         private string _searchInput;
-         public string SearchInput
+         private string? _searchInput;
+         public string? SearchInput
          {
              get => _searchInput;
              set
