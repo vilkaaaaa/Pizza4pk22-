@@ -14,6 +14,8 @@ namespace Pizza.ViewModels
         public AddEditCustomerViewModel()
         {
             _repository = new CustomerRepository();
+            SaveCommand = ????;
+            CancelCommand = new RelayCommand(OnCancel));
         }
         private bool _isEditeMode;
         public bool IsEditeMode
@@ -73,6 +75,16 @@ namespace Pizza.ViewModels
             target.LastName = source.LastName;
             target.Email = source.Email;
             target.Phone = source.Phone;
+        }
+
+        private async void OnSave()
+        {
+            UpdateCustomer(Customer, _editingCustomer);
+            if(IsEditeMode)
+                await _repository.UpdateCustomerAsync(_editingCustomer);
+            else
+                await _repository.AddCustomerAsync(_editingCustomer);
+            Done?.Invoke();
         }
     }
 }
