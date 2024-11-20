@@ -18,6 +18,7 @@ namespace Pizza.Services
         //удалять пользователя
         Task DeleteCustomerAsync(Guid customerId);
         //создавать пользователя
-        Task<Customer> CreateCustomerAsync(Customer customer);
+        Task<Customer> AddCustomerAsync(Customer customer);
+        
     }
 }
