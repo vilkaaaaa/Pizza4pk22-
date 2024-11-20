@@ -12,7 +12,7 @@ namespace Pizza.Services
     {
         private readonly PizzaDbkozlovtsevContext _context = new PizzaDbkozlovtsevContext();
 
-        public async Task<Customer> CreateCustomerAsync(Customer customer)
+        public async Task<Customer> AddCustomerAsync(Customer customer)
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
