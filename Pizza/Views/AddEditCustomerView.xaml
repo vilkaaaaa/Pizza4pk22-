@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pizza.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="Bisque">
     <Grid>
-            
+        <TextBlock Text="Окно добавления кустомера и еще редактирования" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="50" TextAlignment="Center"/>
+        <StackPanel Width="350" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBox x:Name="Name" Text="Введите имену"/>
+            <TextBox x:Name="Secondname" Text="Второе имя введите"/>
+            <TextBox x:Name="Phone" Text="Введите фон"/>
+            <TextBox x:Name="Email" Text="Введите и маил"/>
+            <Button Content="Нажмать"/>
+        </StackPanel>
     </Grid>
 </UserControl>
